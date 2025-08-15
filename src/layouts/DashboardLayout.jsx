@@ -1,16 +1,22 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router";
-import { FaMoneyBillWave, FaListAlt, FaChartPie } from "react-icons/fa";
+import { NavLink, Outlet, useNavigate } from "react-router";
+import { FaMoneyBillWave, FaListAlt, FaChartPie, FaSignOutAlt } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
+  const { logoutUser } = useAuth();
+  const navigate = useNavigate();
+
  const userLinks = (
   <>
-    <li className="border-t border-b border-white/20 py-2 font-semibold text-sm text-center uppercase text-gray-400">
-      Track your Expense
+    <li className="border-t border-b border-white/20 py-2 font-semibold text-sm text-center text-gray-400">
+      Track your own Expense
     </li>
     <li>
       <NavLink
-        to="/dashboard"
+        to="add-expense"
         className={({ isActive }) =>
           isActive ? "font-semibold text-primary border-b-2" : "text-white"
         }
@@ -30,7 +36,7 @@ const DashboardLayout = () => {
     </li>
     <li>
       <NavLink
-        to=""
+        to="/dashboard/chart"
         className={({ isActive }) =>
           isActive ? "font-semibold text-primary border-b-2" : "text-white"
         }
@@ -40,6 +46,18 @@ const DashboardLayout = () => {
     </li>
   </>
 );
+
+const handleLogout = async () => {
+  try {
+    await logoutUser();
+    toast.success("You have successfully logged out!");
+    navigate("/auth/login");
+  } catch (err) {
+    console.error("Logout failed:", err);
+    toast.error("Failed to logout. Try again.");
+  }
+};
+
   return (
     <div className="drawer lg:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -47,7 +65,7 @@ const DashboardLayout = () => {
       <div className="drawer-content flex flex-col min-h-screen bg-gray-100">
         {/* Navbar (Mobile only) */}
 
-        <div className="navbar bg-[#18181b]/100 backdrop-blur-md w-full lg:hidden shadow-md">
+        <div className="navbar bg-[#18181b] backdrop-blur-md w-full lg:hidden shadow-md">
           <div className="flex-none">
             <label htmlFor="my-drawer-2">
               <svg
@@ -77,14 +95,30 @@ const DashboardLayout = () => {
 
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu bg-[#18181b]/100 backdrop-blur-md min-h-screen w-72 p-4 text-white space-y-1">
-          {/* Logo */}
-          <NavLink to="/">
-            <div className="flex items-center gap-2 mb-4">
-            </div>
-          </NavLink>
-          {userLinks}
-        </ul>
+        <ul className="menu bg-[#18181b] backdrop-blur-md min-h-screen w-72 p-4 text-white flex flex-col justify-between">
+  <div>
+    {/* Logo */}
+    <NavLink to="/">
+      <div className="flex items-center justify-center gap-2 mb-4">
+        <span className="text-xl  font-bold uppercase">Expense Tracker</span>
+      </div>
+    </NavLink>
+
+    {/* User Links */}
+    {userLinks}
+  </div>
+
+  {/* Logout Button */}
+  <li className="mt-auto">
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center gap-2 text-red-500 hover:text-white font-semibold p-2 rounded-md"
+    >
+      <FaSignOutAlt /> Logout
+    </button>
+  </li>
+</ul>
+
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import useAuth from "../hooks/useAuth";
 
 const Register = () => {
   const { createUser, setUser, setLoading } = useAuth();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -30,7 +30,7 @@ const Register = () => {
       });
       toast.success("Registration successful!");
       setLoading(false);
-      // navigate("/");
+      navigate("/auth/login");
       reset();
     } catch (err) {
       toast.error(err.message || "Something went wrong.");

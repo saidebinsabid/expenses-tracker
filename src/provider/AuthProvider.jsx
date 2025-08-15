@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //Logout User
+  // Logout User
   const logoutUser = async () => {
     setLoading(true);
     try {

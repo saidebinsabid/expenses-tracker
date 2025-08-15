@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { FaGoogle, FaFacebookF, FaTwitter } from "react-icons/fa";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
