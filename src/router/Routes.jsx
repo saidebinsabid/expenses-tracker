@@ -7,8 +7,13 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AddExpense from "../pages/DashBoardPages/AddExpense";
 import ExpenseList from "../pages/DashBoardPages/ExpenseList";
 import DashboardHome from "../pages/DashBoardPages/DashboardHome";
+import Forbidden from "../pages/Forbidden";
 
 export const router = createBrowserRouter([
+  {
+    path: "/forbidden",
+    element: <Forbidden></Forbidden>,
+  },
   {
     path: "/",
     element: <Navigate to="/auth/login" replace />,
