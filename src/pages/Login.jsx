@@ -14,9 +14,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const { signInUser, setLoading, setUser } = useAuth();
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // const from = location.state?.from || "/";
+  const navigate = useNavigate();
+
 
   const onSubmit = async (data) => {
     try {
@@ -25,7 +24,7 @@ const Login = () => {
       if (user) {
         setUser({ displayName: user.displayName, email: user.email });
         toast.success("Login successful");
-        // navigate(from, { replace: true });
+        navigate("/dashboard");
       }
     } catch (error) {
       toast.error(error.message || "Login failed");
