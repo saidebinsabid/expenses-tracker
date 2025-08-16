@@ -20,7 +20,7 @@
 
 ## 🖼️ Project Banner
 
-![Expense Tracker Banner](./public/banner.png)
+![Expense Tracker Banner](https://github.com/saidebinsabid/expenses-tracker/blob/main/website%20image.png)
 
 ---
 
