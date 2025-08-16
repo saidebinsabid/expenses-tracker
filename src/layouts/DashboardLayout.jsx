@@ -103,14 +103,11 @@ const DashboardLayout = () => {
         <ul className="menu bg-[#18181b] backdrop-blur-md min-h-screen w-72 p-4 text-white flex flex-col justify-between">
           <div>
             {/* Logo */}
-            <NavLink to="/">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <span className="text-xl  font-bold uppercase">
-                  Expense Tracker
-                </span>
-              </div>
-            </NavLink>
-
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="text-xl  font-bold uppercase">
+                Expense Tracker
+              </span>
+            </div>
             {/* User Links */}
             {userLinks}
           </div>
