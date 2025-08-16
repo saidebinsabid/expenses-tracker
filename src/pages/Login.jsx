@@ -33,7 +33,7 @@ const Login = () => {
           { withCredentials: true }
         );
 
-        console.log("JWT token received and cookie set:", res.data.token);
+        // console.log("JWT token received and cookie set:", res.data.token);
 
         toast.success("Login successful");
         navigate("/dashboard");
