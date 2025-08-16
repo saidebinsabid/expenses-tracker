@@ -8,6 +8,7 @@ import AddExpense from "../pages/DashBoardPages/AddExpense";
 import ExpenseList from "../pages/DashBoardPages/ExpenseList";
 import DashboardHome from "../pages/DashBoardPages/DashboardHome";
 import Forbidden from "../pages/Forbidden";
+import ExpenseChart from "../pages/DashBoardPages/ExpenseChart";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "expense-list",
         element: <ExpenseList></ExpenseList>,
+      },
+      {
+        path: "expense-chart",
+        element: <ExpenseChart></ExpenseChart>,
       },
     ],
   },

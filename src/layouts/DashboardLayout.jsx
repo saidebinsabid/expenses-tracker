@@ -41,7 +41,7 @@ const DashboardLayout = () => {
       </li>
       <li>
         <NavLink
-          to="/dashboard/chart"
+          to="expense-chart"
           className={({ isActive }) =>
             isActive ? "font-semibold text-primary border-b-2" : "text-white"
           }
