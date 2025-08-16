@@ -1,7 +1,8 @@
 # 💰 Personal Expense Tracker
 
 ## 🚀 Live Project Link
-[![Live Demo](https://lustrous-llama-8abf6e.netlify.app/auth/login)](#)  
+## 🚀 Live Project Link
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-%20-%2300C853?style=for-the-badge&logo=appveyor)](https://lustrous-llama-8abf6e.netlify.app/auth/login)  
 
 ---
 
