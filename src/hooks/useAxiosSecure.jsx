@@ -4,37 +4,27 @@ import { useEffect } from "react";
 
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
+  withCredentials: true, 
 });
 
 const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const requestInterceptor = axiosSecure.interceptors.request.use(
-      (config) => {
-        config.withCredentials = true;
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-    const responseInterceptor = axiosSecure.interceptors.response.use(
-      (res) => res,
-      (error) => {
-        const status = error?.response?.status;
-
-        if (status === 403) {
-          navigate("/forbidden");
-        } else if (status === 401) {
-          navigate("/auth/login");
-        }
-
-        return Promise.reject(error);
+    const reqInterceptor = axiosSecure.interceptors.request.use(config => config);
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      res => res,
+      err => {
+        const status = err?.response?.status;
+        if (status === 401) navigate("/auth/login");
+        if (status === 403) navigate("/forbidden");
+        return Promise.reject(err);
       }
     );
+
     return () => {
-      axiosSecure.interceptors.request.eject(requestInterceptor);
-      axiosSecure.interceptors.response.eject(responseInterceptor);
+      axiosSecure.interceptors.request.eject(reqInterceptor);
+      axiosSecure.interceptors.response.eject(resInterceptor);
     };
   }, [navigate]);
 

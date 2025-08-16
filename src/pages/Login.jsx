@@ -6,6 +6,7 @@ import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const {
@@ -16,13 +17,24 @@ const Login = () => {
   const { signInUser, setLoading, setUser } = useAuth();
   const navigate = useNavigate();
 
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      const user = await signInUser(data.email, data.password);
-      if (user) {
-        setUser({ displayName: user.displayName, email: user.email });
+      const firebaseUser = await signInUser(data.email, data.password);
+
+      if (firebaseUser?.email) {
+        setUser({
+          displayName: firebaseUser.displayName,
+          email: firebaseUser.email,
+        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt`,
+          { email: firebaseUser.email },
+          { withCredentials: true }
+        );
+
+        console.log("JWT token received and cookie set:", res.data.token);
+
         toast.success("Login successful");
         navigate("/dashboard");
       }

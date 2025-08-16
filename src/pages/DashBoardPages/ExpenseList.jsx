@@ -23,7 +23,7 @@ const ExpenseList = () => {
     },
   });
 
-  // Delete
+  // Delete expense
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       await axiosSecure.delete(`/expenses/${id}`);
@@ -43,7 +43,7 @@ const ExpenseList = () => {
     },
   });
 
-  // Filtered expenses
+  // Filter expenses by category
   const filteredExpenses = useMemo(() => {
     if (selectedCategory === "All") return expenses;
     return expenses.filter((exp) => exp.category === selectedCategory);
@@ -74,9 +74,7 @@ const ExpenseList = () => {
     });
   };
 
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-full p-4">
@@ -100,7 +98,7 @@ const ExpenseList = () => {
         </select>
       </div>
 
-      {/* Table */}
+      {/* Expenses Table */}
       <div className="overflow-x-auto shadow-lg rounded-lg">
         <table className="table w-full border-collapse text-center">
           <thead>
@@ -114,41 +112,42 @@ const ExpenseList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredExpenses.map((exp, index) => (
-              <tr
-                key={exp._id}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
-              >
-                <td className="py-2 px-4">{index + 1}</td>
-                <td className="py-2 px-4">{exp.title}</td>
-                <td className="py-2 px-4">
-                  ${Number(exp.amount || 0).toFixed(2)}
-                </td>
-                <td className="py-2 px-4">
-                  <span className="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-800">
-                    {exp.category}
-                  </span>
-                </td>
-                <td className="py-2 px-4">
-                  {new Date(exp.date).toLocaleDateString()}
-                </td>
-                <td className="py-2 px-4 flex justify-center gap-2">
-                  <button
-                    className="btn btn-sm btn-warning"
-                    onClick={() => setEditingExpense(exp)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-error"
-                    onClick={() => handleDelete(exp._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {filteredExpenses.length === 0 && (
+            {filteredExpenses.length > 0 ? (
+              filteredExpenses.map((exp, index) => (
+                <tr
+                  key={exp._id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+                >
+                  <td className="py-2 px-4">{index + 1}</td>
+                  <td className="py-2 px-4">{exp.title}</td>
+                  <td className="py-2 px-4">
+                    ${Number(exp.amount || 0).toFixed(2)}
+                  </td>
+                  <td className="py-2 px-4">
+                    <span className="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-800">
+                      {exp.category}
+                    </span>
+                  </td>
+                  <td className="py-2 px-4">
+                    {new Date(exp.date).toLocaleDateString()}
+                  </td>
+                  <td className="py-2 px-4 flex justify-center gap-2">
+                    <button
+                      className="btn btn-sm btn-warning"
+                      onClick={() => setEditingExpense(exp)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => handleDelete(exp._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
                 <td colSpan={6} className="py-4 text-center">
                   No expenses found.

@@ -6,6 +6,7 @@ import registerAnimation from "../assets/register.json";
 import { FaGoogle, FaFacebookF, FaTwitter } from "react-icons/fa";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { createUser, setUser, setLoading } = useAuth();
@@ -28,15 +29,28 @@ const Register = () => {
         ...user,
         displayName: name,
       });
-      toast.success("Registration successful!");
+      Swal.fire({
+        title: "Registration Successful!",
+        text: "Your account has been created.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/auth/login");
+      });
+
       setLoading(false);
-      navigate("/auth/login");
       reset();
     } catch (err) {
-      toast.error(err.message || "Something went wrong.");
+      Swal.fire({
+        title: "Error!",
+        text: err.message || "Something went wrong.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       setLoading(false);
     }
   };
+
   return (
     <section className="w-11/12 mx-auto bg-base-100 flex items-center justify-center py-8">
       <div className="bg-white shadow-2xl rounded-lg p-6 md:p-12 w-full max-w-5xl flex flex-col md:flex-row gap-10 items-center">
